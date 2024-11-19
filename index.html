@@ -5,84 +5,189 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemical Elements and Compounds</title>
     <style>
+        /* Basic Page Style */
         body {
             margin: 0;
             padding: 0;
-            background-color: #121212; /* Dark background */
-            color: #fff; /* White text */
-            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             text-align: center;
-            flex-direction: column; /* Stack elements vertically */
+            flex-direction: column;
         }
 
         .welcome-container {
-            max-width: 500px; /* Limit width */
-            margin: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #1DB954, #191414); /* Spotify-themed gradient */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 12px;
+            background-color: #1a1a1a;
+            box-shadow: 0 6px 30px rgba(255, 255, 255, 0.1);
         }
 
         h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
+            font-size: 2.5em;
+            margin-bottom: 1.5em;
+            color: #e0e0e0;
         }
 
-        button {
-            padding: 15px 30px;
-            font-size: 1.2em;
-            background-color: #1DB954; /* Spotify green */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%; /* Full width button */
-            margin-top: 20px; /* Spacing above button */
+        /* Centered Loader */
+        .loader {
+            height: 20rem;
+            width: 20rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
         }
 
-        button:hover {
-            background-color: #1ed760; /* Lighter green on hover */
+        .react-star {
+            position: relative;
+            width: 15rem;
+            height: 15rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: rotate 3s infinite;
         }
 
-        .gif {
-            margin: 20px 0; /* Spacing above and below the GIF */
-            width: 100%; /* Full width for responsive design */
-            max-width: 400px; /* Maximum width for the GIF */
-            border-radius: 10px; /* Rounded corners */
+        .nucleus {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: linear-gradient(#0738e8, cyan);
+            height: 2rem;
+            width: 2rem;
+            animation: rotate 1s linear infinite;
         }
 
+        .electron {
+            position: absolute;
+            width: 15rem;
+            height: 6rem;
+            border-radius: 50%;
+            border: 0.3rem solid #00ffff;
+            animation: revolve 1s linear infinite;
+        }
+
+        .electron1::before,
+        .electron2::before,
+        .electron3::before {
+            content: "";
+            position: absolute;
+            top: 60%;
+            left: 100%;
+            transform: translate(-50%, -50%);
+            width: 1rem;
+            height: 1rem;
+            background-color: cyan;
+            border-radius: 50%;
+            animation: moveElectron 1s infinite;
+        }
+
+        .electron2 { transform: rotate(60deg); animation-delay: -0.66s; }
+        .electron2::before { animation-delay: -0.66s; }
+        .electron3 { transform: rotate(-60deg); }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg) scale3d(1.1, 1.1, 0); }
+        }
+        
+        @keyframes revolve {
+            0%, 25%, 50%, 75%, 100% { border-color: #00ffff9c; }
+        }
+
+        @keyframes moveElectron {
+            0% { top: 60%; left: 100%; }
+            25% { top: 100%; left: 60%; }
+            50% { top: 60%; left: 0%; }
+            75% { top: 0%; left: 60%; }
+            100% { top: 60%; left: 100%; }
+        }
+
+        /* Glow Button Styling */
+        .glow-on-hover {
+           width: 500px; /* Increased width */
+           height: 80px; /* Increased height */
+           border: none;
+           outline: none;
+           color: #fff;
+           background: #111;
+           cursor: pointer;
+           position: relative;
+           z-index: 0;
+           border-radius: 10px;
+           font-size: 1.2em;
+        }
+
+
+        .glow-on-hover:before {
+            content: '';
+            background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing 20s linear infinite;
+            opacity: 0;
+            transition: opacity .3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        .glow-on-hover:hover:before {
+            opacity: 1;
+        }
+
+        .glow-on-hover:after {
+            z-index: -1;
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0 0; }
+            50% { background-position: 400% 0; }
+            100% { background-position: 0 0; }
+        }
     </style>
 </head>
 <body>
     <div class="welcome-container">
         <h1>Chemical Elements and Compounds</h1>
-        <img src="./assets/atomicstructure.png" alt="Welcome GIF" class="gif"> <!-- Add the path to your GIF here -->
-        <div class="atom-container">
-            <div class="nucleus"></div>
-            <div class="electron-orbit orbit1">
-                <div class="electron"></div>
-            </div>
-            <div class="electron-orbit orbit2">
-                <div class="electron"></div>
-            </div>
-            <div class="electron-orbit orbit3">
-                <div class="electron"></div>
+
+        <!-- Centered Loader animation -->
+        <div class="loader">
+            <div class="react-star">
+                <div class="nucleus"></div>
+                <div class="electron electron1"></div>
+                <div class="electron electron2"></div>
+                <div class="electron electron3"></div>
             </div>
         </div>
-        <button id="goButton">Go to Elements and Compounds List</button>
+
+        <!-- Glow Button -->
+        <button class="glow-on-hover" id="goButton">Go to Elements and Compounds List</button>
     </div>
 
+    
+    </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('goButton').addEventListener('click', function() {
-                window.location.href = "./elements.html";
-            });
+        document.getElementById('goButton').addEventListener('click', function() {
+            window.location.href = "/elements.html"; // Change here to point to the route
         });
     </script>
 </body>
